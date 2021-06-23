@@ -1,5 +1,6 @@
 package cn.guet.dao.impl;
 
+import cn.guet.bean.Role;
 import cn.guet.bean.User;
 import cn.guet.dao.IUserDao;
 
@@ -40,6 +41,16 @@ public class UserDaoImpl implements IUserDao {
                 user.setId(userId);
                 user.setUsername(rs.getString("username"));
 
+                sql="SELECT r.* FROM user_role ur, role r WHERE ur.role_id=r.role_id AND ur.user_id=?";
+                pstmt=conn.prepareStatement(sql);
+                pstmt.setString(1,userId);
+                rs=pstmt.executeQuery();
+                while(rs.next()){
+                    Role role=new Role();
+                    role.setId(rs.getString("ROLE_ID"));
+                    role.setName(rs.getString("ROLE_NAME"));
+                    user.getRoleList().add(role);  //用户关联角色
+                }
                 sql="SELECT p.* FROM user_role ur,role_menu rm,permissions p WHERE ur.role_id=rm.role_id AND rm.id=p.id AND ur.user_id=?";
 
                 pstmt=conn.prepareStatement(sql);
