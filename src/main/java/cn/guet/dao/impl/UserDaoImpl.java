@@ -1,5 +1,6 @@
 package cn.guet.dao.impl;
 
+import cn.guet.bean.Permission;
 import cn.guet.bean.Role;
 import cn.guet.bean.User;
 import cn.guet.dao.IUserDao;
@@ -41,7 +42,7 @@ public class UserDaoImpl implements IUserDao {
                 user.setId(userId);
                 user.setUsername(rs.getString("username"));
 
-                sql="SELECT r.* FROM user_role ur, role r WHERE ur.role_id=r.role_id AND ur.user_id=?";
+                sql="SELECT r.* FROM user_role ur, roles r WHERE ur.role_id=r.role_id AND ur.user_id=?";
                 pstmt=conn.prepareStatement(sql);
                 pstmt.setString(1,userId);
                 rs=pstmt.executeQuery();
@@ -51,12 +52,18 @@ public class UserDaoImpl implements IUserDao {
                     role.setName(rs.getString("ROLE_NAME"));
                     user.getRoleList().add(role);  //用户关联角色
                 }
-                sql="SELECT p.* FROM user_role ur,role_menu rm,permissions p WHERE ur.role_id=rm.role_id AND rm.id=p.id AND ur.user_id=?";
+                sql="SELECT p.* FROM role_menu rm,permissions p WHERE rm.id=p.id AND rm.role_id=?";
 
                 pstmt=conn.prepareStatement(sql);
-                pstmt.setString(1,userId);
+                pstmt.setString(1,user.getRoleList().get(0).getId());
                 rs=pstmt.executeQuery();
                 while(rs.next()){
+                    Permission permission=new Permission();
+                    permission.setId(rs.getString("ID"));
+                    permission.setPid(rs.getString("PID"));
+                    permission.setName(rs.getString("NAME"));
+                    permission.setIsParent(rs.getString("ISPARENT"));
+                    user.getRoleList().get(0).getPermissionList().add(permission);    //角色关联权限
                     System.out.println(rs.getString("NAME"));
                 }
             }

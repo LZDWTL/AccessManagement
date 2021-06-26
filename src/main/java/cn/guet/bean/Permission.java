@@ -6,6 +6,7 @@ package cn.guet.bean;
  */
 public class Permission {
     private String id;
+    private String name;
     private String pid;
     private String url;
     private String icon;
@@ -17,6 +18,14 @@ public class Permission {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPid() {
