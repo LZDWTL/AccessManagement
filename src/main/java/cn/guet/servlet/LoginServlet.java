@@ -25,6 +25,8 @@ public class LoginServlet extends HttpServlet {
         IUserDao iUserDao=new UserDaoImpl();
         User user=iUserDao.login(username,password);
         request.setAttribute("user",user);
-        request.getRequestDispatcher("index.jsp").forward(request,response);
+//        request.getRequestDispatcher("index.jsp").forward(request,response);
+        //页面跳转以后，在ajax.jsp中使用Ajax发送异步请求来获取菜单
+        request.getRequestDispatcher("ajax.jsp").forward(request,response);
     }
 }

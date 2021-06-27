@@ -1,6 +1,9 @@
 package cn.guet.dao;
 
+import cn.guet.bean.Permission;
 import cn.guet.bean.User;
+
+import java.util.List;
 
 /**
  * @author LZDWTL
@@ -14,4 +17,5 @@ public interface IUserDao {
      * @return
      */
     User login(String username,String password);
+    List<Permission> getPermission(String userid);
 }

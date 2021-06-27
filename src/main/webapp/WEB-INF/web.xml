@@ -8,8 +8,16 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>cn.guet.servlet.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PermissionServlet</servlet-name>
+        <servlet-class>cn.guet.servlet.PermissionServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PermissionServlet</servlet-name>
+        <url-pattern>/permission</url-pattern>
     </servlet-mapping>
 </web-app>
